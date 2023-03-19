@@ -1,5 +1,6 @@
 import 'package:crud_with_hive/core/dependency_injector/dependency_injector.dart';
 import 'package:crud_with_hive/core/router/route_management.gr.dart';
+import 'package:crud_with_hive/core/utils/dialog/global_variable.dart';
 import 'package:flutter/material.dart';
 
 class CrudWithHiveApp extends StatelessWidget {
@@ -14,6 +15,7 @@ class CrudWithHiveApp extends StatelessWidget {
         const SplashRoute(),
       ]),
       routeInformationParser: sl<AppRouter>().defaultRouteParser(),
+      scaffoldMessengerKey: GlobalVariable.scaffoldMessengerKey,
     );
   }
 }

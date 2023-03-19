@@ -14,6 +14,7 @@
 import 'package:auto_route/auto_route.dart' as _i4;
 import 'package:flutter/material.dart' as _i5;
 
+import '../../feature/home/data/hive_models/item_hive_model.dart' as _i6;
 import '../../feature/home/presantation/view/home_view.dart' as _i2;
 import '../../feature/item_detail/presentation/view/item_detail_view.dart'
     as _i3;
@@ -38,9 +39,14 @@ class AppRouter extends _i4.RootStackRouter {
       );
     },
     ItemDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<ItemDetailRouteArgs>(
+          orElse: () => const ItemDetailRouteArgs());
       return _i4.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i3.ItemDetailView(),
+        child: _i3.ItemDetailView(
+          key: args.key,
+          itemHiveModel: args.itemHiveModel,
+        ),
       );
     },
   };
@@ -88,12 +94,34 @@ class HomeRoute extends _i4.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.ItemDetailView]
-class ItemDetailRoute extends _i4.PageRouteInfo<void> {
-  const ItemDetailRoute()
-      : super(
+class ItemDetailRoute extends _i4.PageRouteInfo<ItemDetailRouteArgs> {
+  ItemDetailRoute({
+    _i5.Key? key,
+    _i6.ItemHiveModel? itemHiveModel,
+  }) : super(
           ItemDetailRoute.name,
           path: '/itemDetailView',
+          args: ItemDetailRouteArgs(
+            key: key,
+            itemHiveModel: itemHiveModel,
+          ),
         );
 
   static const String name = 'ItemDetailRoute';
+}
+
+class ItemDetailRouteArgs {
+  const ItemDetailRouteArgs({
+    this.key,
+    this.itemHiveModel,
+  });
+
+  final _i5.Key? key;
+
+  final _i6.ItemHiveModel? itemHiveModel;
+
+  @override
+  String toString() {
+    return 'ItemDetailRouteArgs{key: $key, itemHiveModel: $itemHiveModel}';
+  }
 }
