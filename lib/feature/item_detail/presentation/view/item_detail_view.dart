@@ -1,9 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:crud_with_hive/core/dependency_injector/dependency_injector.dart';
+import 'package:crud_with_hive/core/router/route_management.gr.dart';
 import 'package:crud_with_hive/core/theme/custom_text_styles.dart';
 import 'package:crud_with_hive/core/widgets/custom_button.dart';
 import 'package:crud_with_hive/core/widgets/custom_text_form_field.dart';
 import 'package:crud_with_hive/feature/home/data/hive_models/item_hive_model.dart';
 import 'package:crud_with_hive/feature/home/presantation/bloc/home_bloc.dart';
+import 'package:crud_with_hive/feature/home/presantation/view/home_view.dart';
 import 'package:crud_with_hive/feature/item_detail/presentation/cubit/item_detail_cubit.dart';
 import 'package:crud_with_hive/feature/item_detail/presentation/widgets/item_detail_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +29,7 @@ class ItemDetailView extends StatelessWidget {
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, blocState) {
             return BlocBuilder<ItemDetailCubit, ItemDetailState>(
-              builder: (context, cubitState) {
+              builder: (cubitContext, cubitState) {
                 return ListView(
                   padding: const EdgeInsets.all(16),
                   children: [
@@ -78,7 +81,7 @@ class ItemDetailView extends StatelessWidget {
                         : CustomButton(
                             text: 'Update',
                             onPressed: cubitState.buttonActive
-                                ? () {
+                                ? () async {
                                     itemHiveModel!.name = sl<ItemDetailCubit>()
                                         .nameController
                                         .text;
@@ -86,11 +89,11 @@ class ItemDetailView extends StatelessWidget {
                                         sl<ItemDetailCubit>()
                                             .descriptionController
                                             .text;
-                                    sl<HomeBloc>().add(
-                                      HomeEvent.updateItem(
-                                        item: itemHiveModel!,
-                                      ),
-                                    );
+                                    context.read<HomeBloc>().add(
+                                          HomeEvent.updateItem(
+                                            item: itemHiveModel!,
+                                          ),
+                                        );
                                     sl<ItemDetailCubit>().clearFields();
                                   }
                                 : null,

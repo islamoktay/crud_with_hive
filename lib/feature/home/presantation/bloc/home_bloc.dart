@@ -48,7 +48,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final result = await _homeRepo.updateItem(itemHiveModel: event.item);
     if (result) {
       await _onGetItems(const _GetItems(), emit);
-      await sl<AppRouter>().pop();
+      await sl<AppRouter>().replaceAll([HomeRoute()]);
     } else {
       customSnackBar(content: generalErrorMessage);
     }
@@ -58,7 +58,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     final result = await _homeRepo.deleteItem(itemHiveModel: event.item);
     if (result) {
       await _onGetItems(const _GetItems(), emit);
-      await sl<AppRouter>().pop();
     } else {
       customSnackBar(content: generalErrorMessage);
     }

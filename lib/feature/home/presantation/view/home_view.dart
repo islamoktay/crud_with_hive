@@ -16,6 +16,7 @@ class HomeView extends StatelessWidget {
       body: BlocProvider.value(
         value: sl<HomeBloc>()..add(const HomeEvent.getItems()),
         child: BlocBuilder<HomeBloc, HomeState>(
+          bloc: sl<HomeBloc>(),
           builder: (context, state) {
             if (state.items.isEmpty) {
               return const Center(
